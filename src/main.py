@@ -1,8 +1,10 @@
 from fastapi import FastAPI
+from src.modules.auth.presentation.controllers.auth_controller import auth_router
 
 
 application = FastAPI()
+api_verion = "/api/v1"
 
-@application.get("/")
-def login():
-    return "je fais du fast api"
+application.include_router(prefix=api_verion,router=auth_router)
+
+
