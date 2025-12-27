@@ -1,6 +1,5 @@
 from unittest import TestCase, main
-from uuid import uuid4
-from datetime import datetime
+
 
 from core.domain.exceptions.email_already_exsists import EmailAlreadyExists
 from modules.auth.data_source.in_momery.gateway.password_gateway import InMemoryPasswordGateway
@@ -30,7 +29,7 @@ class TestRegister(TestCase):
         users = self.auth_repository.find_all()
         self.assertIn(self.yacoukeita, users)
 
-    def test_should_fail_to_save_user_when_email_already_exsists_in_database(self):
+    def test_should_fail_to_save_user_when_email_already_exists_in_database(self):
     
         self.register(self.yacoukeita)
 
