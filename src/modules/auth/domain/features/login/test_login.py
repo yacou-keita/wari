@@ -1,5 +1,6 @@
 from unittest import TestCase, main
 
+from core.domain.exceptions.user_not_found import UserNotFound
 from modules.auth.data_source.in_momery.gateway.password_gateway import InMemoryPasswordGateway
 from modules.auth.data_source.in_momery.in_memory_auth_repository import InMemoryAuthRepository
 from modules.auth.domain.entities.user import User
@@ -38,6 +39,23 @@ class TestLogin(TestCase):
 
         self.assertIn(user_logged, users)
 
+    def test_authentication_fails_when_email_is_unknown(self):
+        self.register(self.yacoukeita)
+
+        with self.assertRaises(UserNotFound):
+            self.login(CredentialRequest.create(
+                email="test@gmail",
+                password= self.yacoukeita
+                ))
+
+    def test_authentication_fails_when_password_is_unknown(self):
+        self.register(self.yacoukeita)
+
+        with self.assertRaises(UserNotFound):
+            self.login(CredentialRequest.create(
+                email= self.yacoukeita.get_email(),
+                password= "test12"
+                ))
 
 if __name__ == "__main__":
     main()
