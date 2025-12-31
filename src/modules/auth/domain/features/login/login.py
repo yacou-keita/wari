@@ -9,6 +9,9 @@ class Login:
         self.__repository = repository
 
     def __call__(self,credential_request:CredentialRequest):
-        user = self.__repository.find_by_email(credential_request.email)
-        if user is None: raise UserNotFound()
-        return user
+        user_found = self.__repository.find_by_email(credential_request.email)
+        if user_found is None: raise UserNotFound()
+        if user_found.get_password == credential_request.password: return user_found 
+        raise UserNotFound()
+        
+        

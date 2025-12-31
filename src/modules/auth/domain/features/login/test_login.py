@@ -31,8 +31,8 @@ class TestLogin(TestCase):
     def test_authenticate_user_with_valid_credentials(self):
         self.register(self.yacoukeita)
         user_logged = self.login(CredentialRequest.create(
-            email=self.yacoukeita.get_email(),
-            password=self.yacoukeita.get_password()
+            email=self.yacoukeita.get_email,
+            password=self.yacoukeita.get_password
             ))
         
         users = self.auth_repository.find_all()
@@ -45,7 +45,7 @@ class TestLogin(TestCase):
         with self.assertRaises(UserNotFound):
             self.login(CredentialRequest.create(
                 email="test@gmail",
-                password= self.yacoukeita
+                password= self.yacoukeita.get_password
                 ))
 
     def test_authentication_fails_when_password_is_unknown(self):
@@ -53,7 +53,7 @@ class TestLogin(TestCase):
 
         with self.assertRaises(UserNotFound):
             self.login(CredentialRequest.create(
-                email= self.yacoukeita.get_email(),
+                email= self.yacoukeita.get_email,
                 password= "test12"
                 ))
 

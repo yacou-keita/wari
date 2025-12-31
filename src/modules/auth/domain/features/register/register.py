@@ -16,9 +16,9 @@ class Register:
         self.__password_gateway = password_gateway
 
     def __call__(self, user:User):
-        email = user.get_email()
+        email = user.get_email
         user_found = self.__repository.find_by_email(email)
         if user_found is not None:
             raise EmailAlreadyExists(email)
-        user.hash_password(self.__password_gateway.hash(user.get_password()))
+        user.hash_password(self.__password_gateway.hash(user.get_password))
         self.__repository.save(user=user)

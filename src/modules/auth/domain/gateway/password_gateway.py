@@ -1,7 +1,8 @@
 
-from abc import ABC
+from abc import ABC, abstractmethod
 
 
 class PasswordGateway(ABC):
-
-    def hash(password:str) -> str:pass
+    
+    @abstractmethod
+    def hash(self,password:str) -> str: pass
