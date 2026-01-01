@@ -20,19 +20,24 @@ class TestLogin(TestCase):
             repository=self.auth_repository,
             password_gateway= self.password_gateway
             )
-        self.login = Login(repository=self.auth_repository)
+        self.login = Login(repository=self.auth_repository,password_gateway= self.password_gateway)
+
         self.yacoukeita = User.create(
         firstname="Yacou",
         lastname="Keita",
         email="yacou.keita@mail.com",
         password="1234",)
 
+        self.GOOD_PASSWORD = "1234"
+        self.BAD_PASSWORD = "test12"
+        
+
 
     def test_authenticate_user_with_valid_credentials(self):
         self.register(self.yacoukeita)
         user_logged = self.login(CredentialRequest.create(
             email=self.yacoukeita.get_email,
-            password=self.yacoukeita.get_password
+            password=self.GOOD_PASSWORD
             ))
         
         users = self.auth_repository.find_all()
@@ -54,7 +59,7 @@ class TestLogin(TestCase):
         with self.assertRaises(UserNotFound):
             self.login(CredentialRequest.create(
                 email= self.yacoukeita.get_email,
-                password= "test12"
+                password= self.BAD_PASSWORD
                 ))
 
 if __name__ == "__main__":

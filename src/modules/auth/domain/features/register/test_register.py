@@ -40,7 +40,7 @@ class TestRegister(TestCase):
         self.register(self.yacoukeita)
         user = self.auth_repository.find_by_email(self.yacoukeita.get_email)
         if user is not None:
-            self.assertEqual(user.get_password,"hashed_password_1234")
+            self.assertEqual(user.get_password,"hashed::1234")
         
 
 
