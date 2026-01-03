@@ -8,3 +8,5 @@ class InMemoryPasswordGateway(PasswordGateway):
     
     def is_same(self, hashed: str, plain: str) -> bool:
         return hashed == f"hashed::{plain}"
+    
+
