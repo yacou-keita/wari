@@ -48,6 +48,10 @@ class User:
     def hash_password(self, password:str) -> None:
         self.__password = password
 
+    def update_password(self, password:str) -> None:
+        self.hash_password(password)
+        self.__password = password
+
     def __repr__(self):
         return f"(id:{self.__id}, firstname:{self.__firstname}, lastnamed:{self.__lastname}, email:{self.__email}, create_at:{self.__create_at}, create_at:{self.__update_at}, password:{self.__password})"
         
