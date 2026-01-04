@@ -5,7 +5,7 @@ from src.modules.auth.domain.gateway.email_gateway import EmailGateway
 from src.modules.auth.domain.repositories.auth_repository import AuthRepository
 
 
-class ForgotPassword():
+class SendResetPasswordLink():
 
     def __init__(self,email_gateway:EmailGateway,repository:AuthRepository) -> None:
         self.__email_gateway = email_gateway
