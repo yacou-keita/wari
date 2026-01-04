@@ -1,4 +1,4 @@
-from unittest import TestCase
+from unittest import TestCase, main
 
 from src.core.data_source.in_memory.entities_initialization.user_in_memory import UserInMemory
 from src.core.domain.exceptions.user_not_found import UserNotFound
@@ -54,3 +54,7 @@ class TestResetPassword(TestCase):
         
         with self.assertRaises(UserNotFound):
             self.reset_password(request)
+
+
+if __name__ == "__main__":
+    main()

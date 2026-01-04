@@ -2,6 +2,8 @@ from datetime import datetime
 from uuid import UUID, uuid4
 from typing import Optional
 
+from src.modules.auth.domain.entities.owner import Owner
+
 
 class User:
 
@@ -51,7 +53,22 @@ class User:
     def update_password(self, password:str) -> None:
         self.hash_password(password)
         self.__password = password
+
+    def create_owner(self):
+        return Owner.create(
+            id=self.__id,
+            firstname=self.__firstname,
+            lastname=self.__lastname,
+            email= self.__email
+            )
         
     def __repr__(self):
-        return f"(id:{self.__id}, firstname:{self.__firstname}, lastnamed:{self.__lastname}, email:{self.__email}, create_at:{self.__create_at}, create_at:{self.__update_at}, password:{self.__password})"
+        return f"""
+        id:{self.__id},
+        firstname:{self.__firstname},
+        lastnamed:{self.__lastname},
+        email:{self.__email},
+        create_at:{self.__create_at},
+        create_at:{self.__update_at},
+        password:{self.__password}"""
         
