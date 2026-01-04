@@ -1,9 +1,9 @@
 from unittest import TestCase
 
+from src.core.data_source.in_memory.entities_initialization.user_in_memory import UserInMemory
 from src.core.domain.exceptions.user_not_found import UserNotFound
 from src.modules.auth.data_source.in_momery.gateway.password_gateway import InMemoryPasswordGateway
 from src.modules.auth.data_source.in_momery.in_memory_auth_repository import InMemoryAuthRepository
-from src.modules.auth.domain.entities.user import User
 from src.modules.auth.domain.features.register.register import Register
 from src.modules.auth.domain.features.reset_password.reset_password import ResetPassword
 from src.modules.auth.domain.features.reset_password.reset_password_request import ResetPasswordRequest
@@ -23,14 +23,10 @@ class TestResetPassword(TestCase):
             password_gateway= self.password_gateway
             )
   
-        self.yacoukeita = User.create(
-        firstname="Yacou",
-        lastname="Keita",
-        email="yacou.keita@mail.com",
-        password="1234",)
+        self.yacoukeita = UserInMemory.yacoukeita()
 
-        self.BAD_EMAIL = "test.keita@mail.com"
-        self.UPDATE_PASSWORD = "update1234"
+        self.BAD_EMAIL = UserInMemory.badEmail()
+        self.UPDATE_PASSWORD = UserInMemory.updatePassword()
         
         self.register(self.yacoukeita)
         self.reset_password:ResetPassword = ResetPassword(
@@ -48,7 +44,7 @@ class TestResetPassword(TestCase):
         
         user = self.auth_repository.find_by_email(self.yacoukeita.get_email)
         if user is not None:
-            self.assertEqual(user.get_password,f"hashed::{self.UPDATE_PASSWORD}")
+            self.assertEqual(user.get_password,UserInMemory.passwordHashed(self.UPDATE_PASSWORD))
 
     def test_failed_to_reset_password_when_user_does_not_exits(self):
         request = ResetPasswordRequest.create(

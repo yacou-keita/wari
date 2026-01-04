@@ -1,8 +1,8 @@
 from unittest import TestCase, main
 
+from src.core.data_source.in_memory.entities_initialization.user_in_memory import UserInMemory
 from src.core.domain.exceptions.user_not_found import UserNotFound
 from src.modules.auth.data_source.in_momery.gateway.in_memory_token_gateway import InMemoryTokenGateway
-from src.modules.auth.domain.entities.user import User
 from src.modules.auth.domain.features.generate_authencation_token.generate_authencation_token import GenerateAuthenticationToken
 from src.modules.auth.domain.gateway.token_gateway import TokenGateway
 
@@ -12,13 +12,9 @@ class TestGenerateAuthenticationToken(TestCase):
     def setUp(self) -> None:
         self.token_gateway:TokenGateway = InMemoryTokenGateway()
         self.generate_authentication_token = GenerateAuthenticationToken(self.token_gateway)
-        self.yacoukeita = User.create(
-        firstname="Yacou",
-        lastname="Keita",
-        email="yacou.keita@mail.com",
-        password="1234",)
+        self.yacoukeita = UserInMemory.yacoukeita()
 
-        self.BAD_EMAIL = "test.keita@mail.com"
+        self.BAD_EMAIL = UserInMemory.badEmail()
 
 
     def test_generate_authentication_token_when_user_exists(self):

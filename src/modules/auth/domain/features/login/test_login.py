@@ -3,12 +3,12 @@ from unittest import TestCase, main
 from core.domain.exceptions.user_not_found import UserNotFound
 from modules.auth.data_source.in_momery.gateway.password_gateway import InMemoryPasswordGateway
 from modules.auth.data_source.in_momery.in_memory_auth_repository import InMemoryAuthRepository
-from modules.auth.domain.entities.user import User
 from modules.auth.domain.features.login.credential_request import CredentialRequest
 from modules.auth.domain.features.login.login import Login
 from modules.auth.domain.features.register.register import Register
 from modules.auth.domain.gateway.password_gateway import PasswordGateway
 from modules.auth.domain.repositories.auth_repository import AuthRepository
+from src.core.data_source.in_memory.entities_initialization.user_in_memory import UserInMemory
 
 class TestLogin(TestCase):
 
@@ -22,14 +22,10 @@ class TestLogin(TestCase):
             )
         self.login = Login(repository=self.auth_repository,password_gateway= self.password_gateway)
 
-        self.yacoukeita = User.create(
-        firstname="Yacou",
-        lastname="Keita",
-        email="yacou.keita@mail.com",
-        password="1234",)
+        self.yacoukeita = UserInMemory.yacoukeita()
 
-        self.GOOD_PASSWORD = "1234"
-        self.BAD_PASSWORD = "test12"
+        self.GOOD_PASSWORD = UserInMemory.goodPassword()
+        self.BAD_PASSWORD = UserInMemory.badPassword()
         
 
 
@@ -49,7 +45,7 @@ class TestLogin(TestCase):
 
         with self.assertRaises(UserNotFound):
             self.login(CredentialRequest.create(
-                email="test@gmail",
+                email=UserInMemory.badEmail(),
                 password= self.yacoukeita.get_password
                 ))
 
