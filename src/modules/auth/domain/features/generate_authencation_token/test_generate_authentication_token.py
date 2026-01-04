@@ -25,7 +25,7 @@ class TestGenerateAuthenticationToken(TestCase):
 
         token = self.generate_authentication_token(self.yacoukeita)
 
-        self.assertEqual(token,"Bearer yacou.keita@mail.com")
+        self.assertEqual(token, str(self.yacoukeita.get_id))
 
     def test_generate_authentication_token_failed_when_user_does_not_exists(self):
 
